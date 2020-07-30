@@ -1,16 +1,13 @@
 import React, { useState } from "react";
+import { ThemeProvider } from "theme-ui";
+import theme from "./theme";
+import Specification from "./components/specification";
 
 const App = () => {
-  const [counter, setCounter] = useState(0);
-  setTimeout(() => {
-    setCounter(counter + 1);
-  }, 1000);
-
   return (
-    <>
-      <h1>Title</h1>
-      <span>{counter}</span>
-    </>
+    <ThemeProvider theme={theme}>
+      <Specification />
+    </ThemeProvider>
   );
 };
 
