@@ -10,9 +10,15 @@ export const initialState = {
   scenarios: {
     [uniqId()]: {
       title: "",
-      given: "",
-      when: "",
-      then: ""
+      given: {
+        [uniqId()]: ""
+      },
+      when: {
+        [uniqId()]: ""
+      },
+      then: {
+        [uniqId()]: ""
+      }
     }
   }
 };
@@ -43,6 +49,20 @@ export const specificationReducer = (state, action) => {
           [payload.uid]: {
             ...scenarios[payload.uid],
             ...payload.value
+          }
+        }
+      };
+    case "nestedUpdateScenario":
+      return {
+        ...state,
+        scenarios: {
+          ...scenarios,
+          [payload.uid]: {
+            ...scenarios[payload.uid],
+            [payload.conditionType]: {
+              ...scenarios[payload.uid][payload.conditionType],
+              ...payload.value
+            }
           }
         }
       };

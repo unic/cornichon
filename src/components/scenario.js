@@ -18,6 +18,21 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
     });
   };
 
+  const nestedUpdateHandler = (key, nestedKey, val) => {
+    // key = "given", "when"
+    // nestedKey = uid of condition
+    updateForm({
+      type: "nestedUpdateScenario",
+      payload: {
+        uid,
+        conditionType: key,
+        value: {
+          [nestedKey]: val
+        }
+      }
+    })
+  }
+
   const handleRemoveScenario = () => {
     updateForm({
       type: "removeScenario",
@@ -45,27 +60,36 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
         updateHandler={updateHandler}
         mr={4}
       />
-      <Input
-        label="Given"
-        id={`given${index + 1}`}
-        keyName="given"
-        value={fields.given}
-        updateHandler={updateHandler}
-      />
-      <Input
-        label="When"
-        id={`when${index + 1}`}
-        keyName="when"
-        value={fields.when}
-        updateHandler={updateHandler}
-      />
-      <Input
-        label="Then"
-        id={`then${index + 1}`}
-        keyName="then"
-        value={fields.then}
-        updateHandler={updateHandler}
-      />
+      {Object.keys(fields.given).map(key => (
+        <Input
+          label="Given"
+          id={`given${key}`}
+          keyName="given"
+          nestedKey={key}
+          value={fields.given[key]}
+          updateHandler={nestedUpdateHandler}
+        />
+      ))}
+      {Object.keys(fields.when).map(key => (
+        <Input
+          label="When"
+          id={`when${key}`}
+          keyName="when"
+          nestedKey={key}
+          value={fields.when[key]}
+          updateHandler={nestedUpdateHandler}
+        />
+      ))}
+      {Object.keys(fields.then).map(key => (
+        <Input
+          label="Then"
+          id={`then${key}`}
+          keyName="then"
+          nestedKey={key}
+          value={fields.then[key]}
+          updateHandler={nestedUpdateHandler}
+        />
+      ))}
     </Card>
   ) : null;
 };

@@ -6,7 +6,8 @@ const sentenceStarters = {
   so: "So that",
   given: "Given",
   when: "When",
-  then: "Then"
+  then: "Then",
+  and: "and"
 };
 
 const Output = ({ fields }) => {
@@ -40,10 +41,12 @@ const Output = ({ fields }) => {
               } else {
                 return (
                   <>
-                    {`<p><strong>${sentenceStarters[key]}</strong> ${scenario[key]}</p>`}
+                    {Object.keys(scenario[key]).map((nestedKey, i) => (
+                      `<p><strong>${i === 0 ? sentenceStarters[key] : sentenceStarters.and}</strong> ${scenario[key][nestedKey]}</p><br />`
+                    ))}
                     <br />
                   </>
-                );
+                )
               }
             })}
           </>

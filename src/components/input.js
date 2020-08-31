@@ -6,6 +6,7 @@ import VisuallyHidden from "./styled/visually-hidden";
 const Input = ({
   id,
   keyName,
+  nestedKey,
   label,
   value,
   updateHandler,
@@ -13,7 +14,11 @@ const Input = ({
   ...props
 }) => {
   const handleChange = (e) => {
-    updateHandler(keyName, e.target.value);
+    if (nestedKey !== null) {
+      updateHandler(keyName, nestedKey, e.target.value);
+    } else {
+      updateHandler(keyName, e.target.value);
+    }
   };
 
   return (
@@ -35,12 +40,14 @@ const Input = ({
 };
 
 Input.defaultProps = {
-  visuallyHidden: false
+  visuallyHidden: false,
+  nestedKey: null
 };
 
 Input.propTypes = {
   id: PropTypes.string.isRequired,
   keyName: PropTypes.string.isRequired,
+  nestedKey: PropTypes.string,
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   updateHandler: PropTypes.func.isRequired,
