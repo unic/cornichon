@@ -73,9 +73,15 @@ export const specificationReducer = (state, action) => {
           ...scenarios,
           [uniqId()]: {
             title: "",
-            given: "",
-            when: "",
-            then: ""
+            given: {
+              [uniqId()]: ""
+            },
+            when: {
+              [uniqId()]: ""
+            },
+            then: {
+              [uniqId()]: ""
+            }
           }
         }
       };
