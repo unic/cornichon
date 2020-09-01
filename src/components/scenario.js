@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import uniqId from "uniqId";
+import { Card, Button, Flex, Box } from "theme-ui";
 import Input from "./input";
 import TitleInput from "./styled/title-input";
-import { Card, Button } from "theme-ui";
+import Condition from "./condition";
 import Trash from "./icons/trash";
 
 const Scenario = ({ uid, index, fields, updateForm }) => {
@@ -18,7 +20,7 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
     });
   };
 
-  const nestedUpdateHandler = (key, nestedKey, val) => {
+  const nestedUpdateHandler = (key, nestedKey, val = "") => {
     // key = "given", "when"
     // nestedKey = uid of condition
     updateForm({
@@ -30,8 +32,8 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
           [nestedKey]: val
         }
       }
-    })
-  }
+    });
+  };
 
   const handleRemoveScenario = () => {
     updateForm({
@@ -60,36 +62,42 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
         updateHandler={updateHandler}
         mr={4}
       />
-      {Object.keys(fields.given).map(key => (
-        <Input
-          label="Given"
-          id={`given${key}`}
-          keyName="given"
-          nestedKey={key}
-          value={fields.given[key]}
-          updateHandler={nestedUpdateHandler}
-        />
-      ))}
-      {Object.keys(fields.when).map(key => (
-        <Input
-          label="When"
-          id={`when${key}`}
-          keyName="when"
-          nestedKey={key}
-          value={fields.when[key]}
-          updateHandler={nestedUpdateHandler}
-        />
-      ))}
-      {Object.keys(fields.then).map(key => (
-        <Input
-          label="Then"
-          id={`then${key}`}
-          keyName="then"
-          nestedKey={key}
-          value={fields.then[key]}
-          updateHandler={nestedUpdateHandler}
-        />
-      ))}
+      <Condition updateHandler={nestedUpdateHandler} conditionType="given">
+        {Object.keys(fields.given).map((key, i) => (
+          <Input
+            label={i === 0 ? "Given" : "and"}
+            id={`given${key}`}
+            keyName="given"
+            nestedKey={key}
+            value={fields.given[key]}
+            updateHandler={nestedUpdateHandler}
+          />
+        ))}
+      </Condition>
+      <Condition updateHandler={nestedUpdateHandler} conditionType="when">
+        {Object.keys(fields.when).map((key, i) => (
+          <Input
+            label={i === 0 ? "When" : "and"}
+            id={`when${key}`}
+            keyName="when"
+            nestedKey={key}
+            value={fields.when[key]}
+            updateHandler={nestedUpdateHandler}
+          />
+        ))}
+      </Condition>
+      <Condition updateHandler={nestedUpdateHandler} conditionType="then">
+        {Object.keys(fields.then).map((key, i) => (
+          <Input
+            label={i === 0 ? "Then" : "and"}
+            id={`then${key}`}
+            keyName="then"
+            nestedKey={key}
+            value={fields.then[key]}
+            updateHandler={nestedUpdateHandler}
+          />
+        ))}
+      </Condition>
     </Card>
   ) : null;
 };

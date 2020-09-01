@@ -14,9 +14,7 @@ const Output = ({ fields }) => {
   return (
     <>
       <pre>{JSON.stringify(fields, null, 2)}</pre>
-      {`<h1>${fields.title}</h1>`}
-      <br />
-      {`<h2>User Story</h2>`}
+      {`<h1>User Story: ${fields.title}</h1>`}
       <br />
       {Object.keys(fields.userStory).map((key) => (
         <>
@@ -24,7 +22,7 @@ const Output = ({ fields }) => {
           <br />
         </>
       ))}
-      {`<h2>Scenarios</h2>`}
+      {`<h2>Acceptance Criteria</h2>`}
       <br />
       {Object.keys(fields.scenarios).map((key) => {
         const scenario = fields.scenarios[key];
@@ -41,12 +39,15 @@ const Output = ({ fields }) => {
               } else {
                 return (
                   <>
-                    {Object.keys(scenario[key]).map((nestedKey, i) => (
-                      `<p><strong>${i === 0 ? sentenceStarters[key] : sentenceStarters.and}</strong> ${scenario[key][nestedKey]}</p><br />`
-                    ))}
+                    {Object.keys(scenario[key]).map(
+                      (nestedKey, i) =>
+                        `<p><strong>${
+                          i === 0 ? sentenceStarters[key] : sentenceStarters.and
+                        }</strong> ${scenario[key][nestedKey]}</p>`
+                    )}
                     <br />
                   </>
-                )
+                );
               }
             })}
           </>
