@@ -1,16 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import uniqId from "uniqId";
 import { Button, Flex, Box } from "theme-ui";
-import Plus from "./icons/plus";
+import Input from "./input";
+import Trash from "./icons/trash";
 
-const Condition = ({ updateHandler, conditionType, children }) => {
+const Condition = ({
+  index,
+  keyName,
+  condition,
+  conditionType,
+  updateHandler,
+  removeHandler
+}) => {
   return (
     <Flex
       sx={{
         flexDirection: "row",
-        position: "relative",
-        marginBottom: 4
+        position: "relative"
       }}
     >
       <Box
@@ -18,31 +24,44 @@ const Condition = ({ updateHandler, conditionType, children }) => {
           flex: "90% 1 0"
         }}
       >
-        {children}
+        <Input
+          label={index === 0 ? conditionType : "and"}
+          id={`${conditionType}${keyName}`}
+          keyName={conditionType}
+          nestedKey={keyName}
+          value={condition}
+          updateHandler={updateHandler}
+        />
       </Box>
       <Box
         sx={{
           flex: "10% 0 1"
         }}
       >
-        <Button
-          type="button"
-          onClick={() => updateHandler(conditionType, uniqId())}
-          sx={{
-            variant: "buttons.addAnd"
-          }}
-        >
-          <Plus />
-        </Button>
+        {index === 0 ? null : (
+          <Button
+            type="button"
+            onClick={() => removeHandler(conditionType, keyName)}
+            sx={{
+              variant: "buttons.addAnd",
+              marginTop: "25px"
+            }}
+          >
+            <Trash />
+          </Button>
+        )}
       </Box>
     </Flex>
   );
 };
 
 Condition.propTypes = {
-  updateHandler: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+  keyName: PropTypes.string.isRequired,
+  condition: PropTypes.any.isRequired,
   conditionType: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
+  updateHandler: PropTypes.func.isRequired,
+  removeHandler: PropTypes.func.isRequired
 };
 
 export default Condition;

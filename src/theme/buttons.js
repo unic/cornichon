@@ -12,9 +12,6 @@ export default {
       color: "text"
     },
     addAnd: {
-      position: "absolute",
-      bottom: 0,
-      right: 0,
       padding: 3,
       backgroundColor: "background",
       color: "text"

@@ -86,11 +86,21 @@ export const specificationReducer = (state, action) => {
         }
       };
     case "removeScenario":
-      const newScenarios = { ...scenarios };
-      delete newScenarios[payload.uid];
+      const updatedScenarios = { ...scenarios };
+      delete updatedScenarios[payload.uid];
       return {
         ...state,
-        scenarios: newScenarios
+        scenarios: updatedScenarios
+      };
+    case "removeCondition":
+      const updatedScenario = { ...scenarios[payload.uid] };
+      delete updatedScenario[payload.conditionType][payload.nestedKey];
+      return {
+        ...state,
+        scenarios: {
+          ...scenarios,
+          [payload.uid]: updatedScenario
+        }
       };
     default:
       console.log("invalid action");
