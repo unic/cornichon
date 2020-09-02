@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { useReducer } from "react";
 import { jsx, Flex, Box } from "theme-ui";
-import { specificationReducer, initialState } from "../store/specification";
+import { specificationReducer, initialState } from "../store/state";
 import UserStory from "./user-story";
 import Scenarios from "./scenarios";
 import Output from "./output";
