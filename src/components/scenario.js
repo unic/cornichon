@@ -6,19 +6,17 @@ import Conditions from "./conditions";
 import Trash from "./icons/trash";
 
 const Scenario = ({ uid, index, fields, updateForm }) => {
-  const handleUpdateScenario = (key) => (
-    (val) => {
-      updateForm({
-        type: "updateScenario",
-        payload: {
-          uid,
-          value: {
-            [key]: val
-          }
+  const handleUpdateScenario = (key) => (val) => {
+    updateForm({
+      type: "updateScenario",
+      payload: {
+        uid,
+        value: {
+          [key]: val
         }
-      });
-    }
-  );
+      }
+    });
+  };
 
   const handleRemoveScenario = () => {
     updateForm({
@@ -27,49 +25,42 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
     });
   };
 
-  const handleUpdateAcceptanceCriteria = (conditionType) => (
-    (nestedKey) => (
-      (val = "") => {
-        console.log(val);
-        updateForm({
-          type: "updateAcceptanceCriteria",
-          payload: {
-            uid,
-            conditionType,
-            value: {
-              [nestedKey]: val
-            }
-          }
-        });
+  const handleUpdateAcceptanceCriteria = (conditionType) => (nestedKey) => (
+    val = ""
+  ) => {
+    updateForm({
+      type: "updateAcceptanceCriteria",
+      payload: {
+        uid,
+        conditionType,
+        value: {
+          [nestedKey]: val
+        }
       }
-    )
-  );
+    });
+  };
 
-  const handleRemoveAcceptanceCriteria = (conditionType) => (
-    (nestedKey) => {
-      updateForm({
-        type: "removeAcceptanceCriteria",
-        payload: {
-          uid,
-          conditionType,
-          nestedKey
-        }
-      });
-    }
-  );
+  const handleRemoveAcceptanceCriteria = (conditionType) => (nestedKey) => {
+    updateForm({
+      type: "removeAcceptanceCriteria",
+      payload: {
+        uid,
+        conditionType,
+        nestedKey
+      }
+    });
+  };
 
-  const handleAddAcceptanceCriteria = (conditionType) => (
-    (nestedKey) => {
-      updateForm({
-        type: "addAcceptanceCriteria",
-        payload: {
-          uid,
-          conditionType,
-          nestedKey
-        }
-      })
-    }
-  );
+  const handleAddAcceptanceCriteria = (conditionType) => (nestedKey) => {
+    updateForm({
+      type: "addAcceptanceCriteria",
+      payload: {
+        uid,
+        conditionType,
+        nestedKey
+      }
+    });
+  };
 
   return fields ? (
     <Card>

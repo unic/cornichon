@@ -13,7 +13,7 @@ const generateEmptyScenario = () => ({
       [uniqId()]: ""
     }
   }
-})
+});
 
 export const initialState = {
   title: "",
@@ -23,7 +23,6 @@ export const initialState = {
     so: ""
   },
   scenarios: generateEmptyScenario()
-    
 };
 
 export const specificationReducer = (state, action) => {
@@ -103,16 +102,16 @@ export const specificationReducer = (state, action) => {
           }
         }
       };
-      case "removeAcceptanceCriteria":
-        const updatedScenario = { ...scenarios[payload.uid] };
-        delete updatedScenario[payload.conditionType][payload.nestedKey];
-        return {
-          ...state,
-          scenarios: {
-            ...scenarios,
-            [payload.uid]: updatedScenario
-          }
-        };
+    case "removeAcceptanceCriteria":
+      const updatedScenario = { ...scenarios[payload.uid] };
+      delete updatedScenario[payload.conditionType][payload.nestedKey];
+      return {
+        ...state,
+        scenarios: {
+          ...scenarios,
+          [payload.uid]: updatedScenario
+        }
+      };
 
     // Catch all for invalid actions
     default:

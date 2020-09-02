@@ -25,7 +25,10 @@ const Specification = () => {
       >
         <form onSubmit={handleSubmit}>
           {state.title !== undefined ? (
-            <SpecificationTitle titleValue={state.title} updateForm={dispatch} />
+            <SpecificationTitle
+              titleValue={state.title}
+              updateForm={dispatch}
+            />
           ) : null}
           {state.userStory ? (
             <UserStory fields={state.userStory} updateForm={dispatch} />

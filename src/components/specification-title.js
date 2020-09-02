@@ -5,18 +5,16 @@ import VisuallyHidden from "./styled/visually-hidden";
 import TitleInput from "./styled/title-input";
 
 const SpecificationTitle = ({ updateForm, titleValue }) => {
-  const updateTitle = (key) => (
-    (val) => {
-      updateForm({
-        type: "updateTitle",
-        payload: {
-          value: {
-            [key]: val
-          }
+  const updateTitle = (key) => (val) => {
+    updateForm({
+      type: "updateTitle",
+      payload: {
+        value: {
+          [key]: val
         }
-      });
-    }
-  );
+      }
+    });
+  };
 
   return (
     <TitleInput

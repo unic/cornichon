@@ -42,7 +42,9 @@ const Output = ({ fields }) => {
                     {Object.keys(scenario[conditionKey]).map(
                       (nestedKey, i) =>
                         `<p><strong>${
-                          i === 0 ? sentenceStarters[conditionKey] : sentenceStarters.and
+                          i === 0
+                            ? sentenceStarters[conditionKey]
+                            : sentenceStarters.and
                         }</strong> ${scenario[conditionKey][nestedKey]}</p>`
                     )}
                     <br />

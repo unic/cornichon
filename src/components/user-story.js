@@ -4,18 +4,16 @@ import PropTypes from "prop-types";
 import Input from "./input";
 
 const UserStory = ({ fields, updateForm }) => {
-  const updateHandler = (key) => (
-    (val) => {
-      updateForm({
-        type: "updateUserStory",
-        payload: {
-          value: {
-            [key]: val
-          }
+  const updateHandler = (key) => (val) => {
+    updateForm({
+      type: "updateUserStory",
+      payload: {
+        value: {
+          [key]: val
         }
-      });
-    }
-  );
+      }
+    });
+  };
 
   return fields ? (
     <Box mb={5}>
