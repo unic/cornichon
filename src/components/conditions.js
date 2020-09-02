@@ -9,8 +9,8 @@ const Conditions = ({
   conditions,
   conditionType,
   updateHandler,
-  removeHandler,
-  addHandler
+  addHandler,
+  removeHandler
 }) => {
   return (
     <Box
@@ -46,8 +46,8 @@ Conditions.propTypes = {
   conditions: PropTypes.any.isRequired,
   conditionType: PropTypes.string.isRequired,
   updateHandler: PropTypes.func.isRequired,
-  removeHandler: PropTypes.func.isRequired,
-  addHandler: PropTypes.func.isRequired
+  addHandler: PropTypes.func.isRequired,
+  removeHandler: PropTypes.func.isRequired
 };
 
 export default Conditions;
