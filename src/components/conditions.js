@@ -9,7 +9,8 @@ const Conditions = ({
   conditions,
   conditionType,
   updateHandler,
-  removeHandler
+  removeHandler,
+  addHandler
 }) => {
   return (
     <Box
@@ -24,13 +25,13 @@ const Conditions = ({
           index={i}
           condition={conditions[key]}
           conditionType={conditionType}
-          updateHandler={updateHandler}
+          updateHandler={updateHandler(key)}
           removeHandler={removeHandler}
         />
       ))}
       <Button
         type="button"
-        onClick={() => updateHandler(conditionType, uniqId())}
+        onClick={() => addHandler(uniqId())}
         sx={{
           variant: "buttons.addAnd"
         }}
@@ -45,7 +46,8 @@ Conditions.propTypes = {
   conditions: PropTypes.any.isRequired,
   conditionType: PropTypes.string.isRequired,
   updateHandler: PropTypes.func.isRequired,
-  removeHandler: PropTypes.func.isRequired
+  removeHandler: PropTypes.func.isRequired,
+  addHandler: PropTypes.func.isRequired
 };
 
 export default Conditions;

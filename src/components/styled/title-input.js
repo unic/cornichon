@@ -13,7 +13,7 @@ const TitleInput = ({
   ...props
 }) => {
   const handleChange = (e) => {
-    updateHandler(keyName, e.target.value);
+    updateHandler(e.target.value);
   };
 
   return (

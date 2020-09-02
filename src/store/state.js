@@ -31,7 +31,7 @@ export const specificationReducer = (state, action) => {
     case "updateTitle":
       return {
         ...state,
-        ...payload
+        ...payload.value
       };
     case "updateUserStory":
       return {
@@ -100,6 +100,20 @@ export const specificationReducer = (state, action) => {
         scenarios: {
           ...scenarios,
           [payload.uid]: updatedScenario
+        }
+      };
+    case "addCondition":
+      return {
+        ...state,
+        scenarios: {
+          ...scenarios,
+          [payload.uid]: {
+            ...scenarios[payload.uid],
+            [payload.conditionType]: {
+              ...scenarios[payload.uid][payload.conditionType],
+              [payload.nestedKey]: ""
+            }
+          }
         }
       };
     default:

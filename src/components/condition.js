@@ -41,7 +41,7 @@ const Condition = ({
         {index === 0 ? null : (
           <Button
             type="button"
-            onClick={() => removeHandler(conditionType, keyName)}
+            onClick={() => removeHandler(keyName)}
             sx={{
               variant: "buttons.addAnd",
               marginTop: "25px"

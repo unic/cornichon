@@ -6,32 +6,37 @@ import Conditions from "./conditions";
 import Trash from "./icons/trash";
 
 const Scenario = ({ uid, index, fields, updateForm }) => {
-  const updateHandler = (key, val) => {
-    updateForm({
-      type: "updateScenario",
-      payload: {
-        uid,
-        value: {
-          [key]: val
+  const updateHandler = (key) => (
+    (val) => {
+      updateForm({
+        type: "updateScenario",
+        payload: {
+          uid,
+          value: {
+            [key]: val
+          }
         }
-      }
-    });
-  };
+      });
+    }
+  );
 
-  const nestedUpdateHandler = (key, nestedKey, val = "") => {
-    // key = "given", "when", "then"
-    // nestedKey = uid of condition
-    updateForm({
-      type: "nestedUpdateScenario",
-      payload: {
-        uid,
-        conditionType: key,
-        value: {
-          [nestedKey]: val
-        }
+  const nestedUpdateHandler = (conditionType) => (
+    (nestedKey) => (
+      (val = "") => {
+        console.log(val);
+        updateForm({
+          type: "nestedUpdateScenario",
+          payload: {
+            uid,
+            conditionType,
+            value: {
+              [nestedKey]: val
+            }
+          }
+        });
       }
-    });
-  };
+    )
+  );
 
   const handleRemoveScenario = () => {
     updateForm({
@@ -40,15 +45,31 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
     });
   };
 
-  const handleRemoveCondition = (conditionType, nestedKey) =>
-    updateForm({
-      type: "removeCondition",
-      payload: {
-        uid,
-        conditionType,
-        nestedKey
-      }
-    });
+  const handleRemoveCondition = (conditionType) => (
+    (nestedKey) => {
+      updateForm({
+        type: "removeCondition",
+        payload: {
+          uid,
+          conditionType,
+          nestedKey
+        }
+      });
+    }
+  );
+
+  const handleAddCondition = (conditionType) => (
+    (nestedKey) => {
+      updateForm({
+        type: "addCondition",
+        payload: {
+          uid,
+          conditionType,
+          nestedKey
+        }
+      })
+    }
+  );
 
   return fields ? (
     <Card>
@@ -67,26 +88,29 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
         label={`Scenario ${index + 1}`}
         placeholder={`Scenario Title...`}
         value={fields.title}
-        updateHandler={updateHandler}
+        updateHandler={updateHandler("title")}
         mr={4}
       />
       <Conditions
         conditions={fields.given}
         conditionType="given"
-        updateHandler={nestedUpdateHandler}
-        removeHandler={handleRemoveCondition}
+        updateHandler={nestedUpdateHandler("given")}
+        removeHandler={handleRemoveCondition("given")}
+        addHandler={handleAddCondition("given")}
       />
       <Conditions
         conditions={fields.when}
         conditionType="when"
-        updateHandler={nestedUpdateHandler}
-        removeHandler={handleRemoveCondition}
+        updateHandler={nestedUpdateHandler("when")}
+        removeHandler={handleRemoveCondition("when")}
+        addHandler={handleAddCondition("when")}
       />
       <Conditions
         conditions={fields.then}
         conditionType="then"
-        updateHandler={nestedUpdateHandler}
-        removeHandler={handleRemoveCondition}
+        updateHandler={nestedUpdateHandler("then")}
+        removeHandler={handleRemoveCondition("then")}
+        addHandler={handleAddCondition("then")}
       />
     </Card>
   ) : null;
