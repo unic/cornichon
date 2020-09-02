@@ -1,5 +1,20 @@
 import uniqId from "uniqId";
 
+const generateEmptyScenario = () => ({
+  [uniqId()]: {
+    title: "",
+    given: {
+      [uniqId()]: ""
+    },
+    when: {
+      [uniqId()]: ""
+    },
+    then: {
+      [uniqId()]: ""
+    }
+  }
+})
+
 export const initialState = {
   title: "",
   userStory: {
@@ -7,20 +22,8 @@ export const initialState = {
     want: "",
     so: ""
   },
-  scenarios: {
-    [uniqId()]: {
-      title: "",
-      given: {
-        [uniqId()]: ""
-      },
-      when: {
-        [uniqId()]: ""
-      },
-      then: {
-        [uniqId()]: ""
-      }
-    }
-  }
+  scenarios: generateEmptyScenario()
+    
 };
 
 export const specificationReducer = (state, action) => {
@@ -60,18 +63,7 @@ export const specificationReducer = (state, action) => {
         ...state,
         scenarios: {
           ...scenarios,
-          [uniqId()]: {
-            title: "",
-            given: {
-              [uniqId()]: ""
-            },
-            when: {
-              [uniqId()]: ""
-            },
-            then: {
-              [uniqId()]: ""
-            }
-          }
+          ...generateEmptyScenario()
         }
       };
     case "removeScenario":
