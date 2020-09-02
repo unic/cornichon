@@ -2,7 +2,7 @@
   "name": "@lbsonley/webpack-react",
   "version": "0.0.1",
   "main": "index.js",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "start": "webpack-dev-server",
     "lint": "prettier --write src/"
