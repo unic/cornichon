@@ -25,7 +25,7 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
       (val = "") => {
         console.log(val);
         updateForm({
-          type: "nestedUpdateScenario",
+          type: "updateAcceptanceCriteria",
           payload: {
             uid,
             conditionType,
@@ -48,7 +48,7 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
   const handleRemoveCondition = (conditionType) => (
     (nestedKey) => {
       updateForm({
-        type: "removeCondition",
+        type: "removeAcceptanceCriteria",
         payload: {
           uid,
           conditionType,
@@ -61,7 +61,7 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
   const handleAddCondition = (conditionType) => (
     (nestedKey) => {
       updateForm({
-        type: "addCondition",
+        type: "addAcceptanceCriteria",
         payload: {
           uid,
           conditionType,

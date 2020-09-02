@@ -28,6 +28,7 @@ export const specificationReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    // User Story Operations
     case "updateTitle":
       return {
         ...state,
@@ -41,6 +42,8 @@ export const specificationReducer = (state, action) => {
           ...payload.value
         }
       };
+
+    // Scenario Operations
     case "updateScenario":
       return {
         ...state,
@@ -49,20 +52,6 @@ export const specificationReducer = (state, action) => {
           [payload.uid]: {
             ...scenarios[payload.uid],
             ...payload.value
-          }
-        }
-      };
-    case "nestedUpdateScenario":
-      return {
-        ...state,
-        scenarios: {
-          ...scenarios,
-          [payload.uid]: {
-            ...scenarios[payload.uid],
-            [payload.conditionType]: {
-              ...scenarios[payload.uid][payload.conditionType],
-              ...payload.value
-            }
           }
         }
       };
@@ -92,17 +81,23 @@ export const specificationReducer = (state, action) => {
         ...state,
         scenarios: updatedScenarios
       };
-    case "removeCondition":
-      const updatedScenario = { ...scenarios[payload.uid] };
-      delete updatedScenario[payload.conditionType][payload.nestedKey];
+
+    // Acceptance Critera (given, when, then, and, or) operations
+    case "updateAcceptanceCriteria":
       return {
         ...state,
         scenarios: {
           ...scenarios,
-          [payload.uid]: updatedScenario
+          [payload.uid]: {
+            ...scenarios[payload.uid],
+            [payload.conditionType]: {
+              ...scenarios[payload.uid][payload.conditionType],
+              ...payload.value
+            }
+          }
         }
       };
-    case "addCondition":
+    case "addAcceptanceCriteria":
       return {
         ...state,
         scenarios: {
@@ -116,6 +111,18 @@ export const specificationReducer = (state, action) => {
           }
         }
       };
+      case "removeAcceptanceCriteria":
+        const updatedScenario = { ...scenarios[payload.uid] };
+        delete updatedScenario[payload.conditionType][payload.nestedKey];
+        return {
+          ...state,
+          scenarios: {
+            ...scenarios,
+            [payload.uid]: updatedScenario
+          }
+        };
+
+    // Catch all for invalid actions
     default:
       console.log("invalid action");
       return state;
