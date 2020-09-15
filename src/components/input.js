@@ -14,11 +14,7 @@ const Input = ({
   ...props
 }) => {
   const handleChange = (e) => {
-    if (nestedKey !== null) {
-      updateHandler(keyName, nestedKey, e.target.value);
-    } else {
-      updateHandler(keyName, e.target.value);
-    }
+    updateHandler(e.target.value);
   };
 
   return (

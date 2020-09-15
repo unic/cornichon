@@ -4,12 +4,14 @@ import PropTypes from "prop-types";
 import VisuallyHidden from "./styled/visually-hidden";
 import TitleInput from "./styled/title-input";
 
-const SpecificationTitle = ({ updateForm, value }) => {
-  const updateTitle = (key, value) => {
+const SpecificationTitle = ({ updateForm, titleValue }) => {
+  const updateTitle = (key) => (val) => {
     updateForm({
       type: "updateTitle",
       payload: {
-        [key]: value
+        value: {
+          [key]: val
+        }
       }
     });
   };
@@ -20,15 +22,15 @@ const SpecificationTitle = ({ updateForm, value }) => {
       keyName="title"
       label="User Story Title"
       placeholder="Enter a Story Title..."
-      value={value}
-      updateHandler={updateTitle}
+      value={titleValue}
+      updateHandler={updateTitle("title")}
     />
   );
 };
 
 SpecificationTitle.propTypes = {
   updateForm: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired
+  titleValue: PropTypes.string.isRequired
 };
 
 export default SpecificationTitle;

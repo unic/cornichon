@@ -1,5 +1,20 @@
 import uniqId from "uniqId";
 
+const generateEmptyScenario = () => ({
+  [uniqId()]: {
+    title: "",
+    given: {
+      [uniqId()]: ""
+    },
+    when: {
+      [uniqId()]: ""
+    },
+    then: {
+      [uniqId()]: ""
+    }
+  }
+});
+
 export const initialState = {
   title: "",
   userStory: {
@@ -7,20 +22,7 @@ export const initialState = {
     want: "",
     so: ""
   },
-  scenarios: {
-    [uniqId()]: {
-      title: "",
-      given: {
-        [uniqId()]: ""
-      },
-      when: {
-        [uniqId()]: ""
-      },
-      then: {
-        [uniqId()]: ""
-      }
-    }
-  }
+  scenarios: generateEmptyScenario()
 };
 
 export const specificationReducer = (state, action) => {
@@ -28,10 +30,11 @@ export const specificationReducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    // User Story Operations
     case "updateTitle":
       return {
         ...state,
-        ...payload
+        ...payload.value
       };
     case "updateUserStory":
       return {
@@ -41,6 +44,8 @@ export const specificationReducer = (state, action) => {
           ...payload.value
         }
       };
+
+    // Scenario Operations
     case "updateScenario":
       return {
         ...state,
@@ -52,7 +57,24 @@ export const specificationReducer = (state, action) => {
           }
         }
       };
-    case "nestedUpdateScenario":
+    case "addScenario":
+      return {
+        ...state,
+        scenarios: {
+          ...scenarios,
+          ...generateEmptyScenario()
+        }
+      };
+    case "removeScenario":
+      const updatedScenarios = { ...scenarios };
+      delete updatedScenarios[payload.uid];
+      return {
+        ...state,
+        scenarios: updatedScenarios
+      };
+
+    // Acceptance Critera (given, when, then, and, or) operations
+    case "updateAcceptanceCriteria":
       return {
         ...state,
         scenarios: {
@@ -66,33 +88,21 @@ export const specificationReducer = (state, action) => {
           }
         }
       };
-    case "addScenario":
+    case "addAcceptanceCriteria":
       return {
         ...state,
         scenarios: {
           ...scenarios,
-          [uniqId()]: {
-            title: "",
-            given: {
-              [uniqId()]: ""
-            },
-            when: {
-              [uniqId()]: ""
-            },
-            then: {
-              [uniqId()]: ""
+          [payload.uid]: {
+            ...scenarios[payload.uid],
+            [payload.conditionType]: {
+              ...scenarios[payload.uid][payload.conditionType],
+              [payload.nestedKey]: ""
             }
           }
         }
       };
-    case "removeScenario":
-      const updatedScenarios = { ...scenarios };
-      delete updatedScenarios[payload.uid];
-      return {
-        ...state,
-        scenarios: updatedScenarios
-      };
-    case "removeCondition":
+    case "removeAcceptanceCriteria":
       const updatedScenario = { ...scenarios[payload.uid] };
       delete updatedScenario[payload.conditionType][payload.nestedKey];
       return {
@@ -102,6 +112,8 @@ export const specificationReducer = (state, action) => {
           [payload.uid]: updatedScenario
         }
       };
+
+    // Catch all for invalid actions
     default:
       console.log("invalid action");
       return state;

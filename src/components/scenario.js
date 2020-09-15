@@ -6,28 +6,13 @@ import Conditions from "./conditions";
 import Trash from "./icons/trash";
 
 const Scenario = ({ uid, index, fields, updateForm }) => {
-  const updateHandler = (key, val) => {
+  const handleUpdateScenario = (key) => (val) => {
     updateForm({
       type: "updateScenario",
       payload: {
         uid,
         value: {
           [key]: val
-        }
-      }
-    });
-  };
-
-  const nestedUpdateHandler = (key, nestedKey, val = "") => {
-    // key = "given", "when", "then"
-    // nestedKey = uid of condition
-    updateForm({
-      type: "nestedUpdateScenario",
-      payload: {
-        uid,
-        conditionType: key,
-        value: {
-          [nestedKey]: val
         }
       }
     });
@@ -40,15 +25,42 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
     });
   };
 
-  const handleRemoveCondition = (conditionType, nestedKey) =>
+  const handleUpdateAcceptanceCriteria = (conditionType) => (nestedKey) => (
+    val = ""
+  ) => {
     updateForm({
-      type: "removeCondition",
+      type: "updateAcceptanceCriteria",
+      payload: {
+        uid,
+        conditionType,
+        value: {
+          [nestedKey]: val
+        }
+      }
+    });
+  };
+
+  const handleRemoveAcceptanceCriteria = (conditionType) => (nestedKey) => {
+    updateForm({
+      type: "removeAcceptanceCriteria",
       payload: {
         uid,
         conditionType,
         nestedKey
       }
     });
+  };
+
+  const handleAddAcceptanceCriteria = (conditionType) => (nestedKey) => {
+    updateForm({
+      type: "addAcceptanceCriteria",
+      payload: {
+        uid,
+        conditionType,
+        nestedKey
+      }
+    });
+  };
 
   return fields ? (
     <Card>
@@ -67,26 +79,29 @@ const Scenario = ({ uid, index, fields, updateForm }) => {
         label={`Scenario ${index + 1}`}
         placeholder={`Scenario Title...`}
         value={fields.title}
-        updateHandler={updateHandler}
+        updateHandler={handleUpdateScenario("title")}
         mr={4}
       />
       <Conditions
         conditions={fields.given}
         conditionType="given"
-        updateHandler={nestedUpdateHandler}
-        removeHandler={handleRemoveCondition}
+        updateHandler={handleUpdateAcceptanceCriteria("given")}
+        addHandler={handleAddAcceptanceCriteria("given")}
+        removeHandler={handleRemoveAcceptanceCriteria("given")}
       />
       <Conditions
         conditions={fields.when}
         conditionType="when"
-        updateHandler={nestedUpdateHandler}
-        removeHandler={handleRemoveCondition}
+        updateHandler={handleUpdateAcceptanceCriteria("when")}
+        addHandler={handleAddAcceptanceCriteria("when")}
+        removeHandler={handleRemoveAcceptanceCriteria("when")}
       />
       <Conditions
         conditions={fields.then}
         conditionType="then"
-        updateHandler={nestedUpdateHandler}
-        removeHandler={handleRemoveCondition}
+        updateHandler={handleUpdateAcceptanceCriteria("then")}
+        addHandler={handleAddAcceptanceCriteria("then")}
+        removeHandler={handleRemoveAcceptanceCriteria("then")}
       />
     </Card>
   ) : null;
