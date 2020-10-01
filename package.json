@@ -21,6 +21,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
     "eslint-plugin-unicorn": "^20.1.0",
+    "file-loader": "^6.1.0",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.3.0",
     "prettier": "^2.0.5",
@@ -33,6 +34,7 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "theme-ui": "^0.3.1",
     "uniqid": "^5.2.0"
   }
